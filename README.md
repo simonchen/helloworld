@@ -1,3 +1,11 @@
+## Adding New Packages [2024-1-25]
+```
+kcptun
+luci-app-kcptun
+udp2raw
+luci-app-udp2raw
+```
+
 ## Setup instruction
 
 ### Method 1 - Clone this repo directly
