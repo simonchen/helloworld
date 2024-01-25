@@ -26,7 +26,7 @@ endef
 
 define Build/Prepare
 	$(MAKE) -C tools/po2lmo po2lmo
-	$(INSTALL_BIN) tools/po2lmo/src/po2lmo /bin/po2lmo
+	$(INSTALL_BIN) tools/po2lmo/src/po2lmo $(STAGING_DIR_HOST)/bin/po2lmo
 	$(foreach po,$(wildcard ${CURDIR}/i18n/zh-cn/*.po), \
 		po2lmo $(po) $(PKG_BUILD_DIR)/$(patsubst %.po,%.lmo,$(notdir $(po)));)
 endef
