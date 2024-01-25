@@ -25,6 +25,8 @@ rm -rf /tmp/luci*
 endef
 
 define Build/Prepare
+	$(MAKE) -C tools/po2lmo po2lmo
+	$(INSTALL_BIN) tools/po2lmo/src/po2lmo $(1)/bin/po2lmo
 	$(foreach po,$(wildcard ${CURDIR}/i18n/zh-cn/*.po), \
 		po2lmo $(po) $(PKG_BUILD_DIR)/$(patsubst %.po,%.lmo,$(notdir $(po)));)
 endef
