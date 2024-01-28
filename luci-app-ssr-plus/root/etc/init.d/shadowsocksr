@@ -225,6 +225,10 @@ start_dns() {
 			ln_start_bin $(first_type mosdns) mosdns start -c $TMP_PATH/mosdns-config.yaml
 			pdnsd_enable_flag=3
 			;;
+                4)
+                        ln_start_bin $(first_type chinadns-ng) chinadns-ng -l $dns_port -t ${dnsserver/:/#} -m /etc/config/china_list.txt -M
+                        pdnsd_enable_flag=1
+                        ;;
 		esac
 
 		if [ "$run_mode" = "router" ]; then
