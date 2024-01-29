@@ -30,7 +30,7 @@ tmp_local_port=
 ARG_UDP=
 
 dns_port="5335"            #dns port
-china_dns_port="5333"      #china_dns_port
+china_dns_port="5353"      #china_dns_port
 tmp_dns_port="300"         #dns2socks temporary port
 tmp_udp_port="301"         #udp temporary port
 tmp_udp_local_port="302"   #udp socks temporary port
