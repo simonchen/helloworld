@@ -15,6 +15,7 @@ uci -q batch <<-EOF >/dev/null
 EOF
 
 rm -rf /etc/config/shadowsocksr-opkg /etc/ssrplus/*opkg
+touch /etc/ssrplus/china_list.txt
 touch /etc/ssrplus/china_ssr.txt
 touch /etc/ssrplus/deny.list
 touch /etc/ssrplus/white.list
