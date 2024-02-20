@@ -1,3 +1,6 @@
 [submodule "luci-app-passwall"]
 	path = luci-app-passwall
 	url = https://github.com/simonchen/luci-app-passwall.git
+[submodule "luci-app-openclash"]
+	path = luci-app-openclash
+	url = https://github.com/simonchen/luci-app-openclash.git
