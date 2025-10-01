@@ -98,6 +98,45 @@ end
 o.default = "fast"
 o.rmempty = false
 
+o = s:option(Flag, "nodelay", translate("nodelay"), translate("Enable nodelay Mode."))
+o.enabled = "1"
+o.disabled = "0"
+o.rmempty = true
+o:depends("mode", "manual")
+function o.cfgvalue(self, section)
+    return Flag.cfgvalue(self, section) or o.enabled
+end
+
+o = s:option(Value, "interval", translate("interval"))
+o.datatype = "uinteger"
+o.placeholder = "20"
+o.rmempty = true
+o:depends("mode", "manual")
+
+o = s:option(ListValue, "resend", translate("resend"))
+o:value("0", translate("Off"))
+o:value("1", translate("On"))
+o:value("2", translate("2nd ACK"))
+o.default = "2"
+o.rmempty = true
+o:depends("mode", "manual")
+
+o = s:option(Flag, "nc", translate("nc"))
+o.enabled = "1"
+o.disabled = "0"
+o.rmempty = true
+o:depends("mode", "manual")
+function o.cfgvalue(self, section)
+    return Flag.cfgvalue(self, section) or o.enabled
+end
+
+o = s:option(Flag, "acknodelay", translate("acknodelay"))
+o.enabled = "true"
+o.disabled = "false"
+o.default = o.disabled
+o.rmempty = true
+o:depends("mode", "manual")
+
 o = s:option(Value, "conn", "%s %s" %{translate("conn"), translate("(optional)")}, translate("Number of UDP connections to server."))
 o.datatype = "uinteger"
 o.placeholder = "1"
@@ -143,45 +182,6 @@ o.enabled = "true"
 o.disabled = "false"
 o.default = o.disabled
 o.rmempty = false
-
-o = s:option(Flag, "nodelay", translate("nodelay"), translate("Enable nodelay Mode."))
-o.enabled = "1"
-o.disabled = "0"
-o.rmempty = true
-o:depends("mode", "manual")
-function o.cfgvalue(self, section)
-    return Flag.cfgvalue(self, section) or o.enabled
-end
-
-o = s:option(Value, "interval", translate("interval"))
-o.datatype = "uinteger"
-o.placeholder = "20"
-o.rmempty = true
-o:depends("mode", "manual")
-
-o = s:option(ListValue, "resend", translate("resend"))
-o:value("0", translate("Off"))
-o:value("1", translate("On"))
-o:value("2", translate("2nd ACK"))
-o.default = "2"
-o.rmempty = true
-o:depends("mode", "manual")
-
-o = s:option(Flag, "nc", translate("nc"))
-o.enabled = "1"
-o.disabled = "0"
-o.rmempty = true
-o:depends("mode", "manual")
-function o.cfgvalue(self, section)
-    return Flag.cfgvalue(self, section) or o.enabled
-end
-
-o = s:option(Flag, "acknodelay", translate("acknodelay"))
-o.enabled = "true"
-o.disabled = "false"
-o.default = o.disabled
-o.rmempty = true
-o:depends("mode", "manual")
 
 o = s:option(ListValue, "smuxver", translate("smuxver"), translate("setting MUST be IDENTICAL on both sides, the default is 1."))
 o:value("1", "1")
