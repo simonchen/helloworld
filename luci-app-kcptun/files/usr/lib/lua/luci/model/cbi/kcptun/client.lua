@@ -208,7 +208,7 @@ function o.write(self, section, value)
     end
 end
 
-o = s:option(Value, "streambuf", "%s %s" %{translate("streambuf"), translate("(optional)")}, translate("per stream receive buffer in bytes, valid for -smuxver=2+, default unit is M
+o = s:option(Value, "streambuf", "%s %s" %{translate("streambuf"), translate("(optional)")}, translate("per stream receive buffer in bytes, valid for -smuxver=2+, default unit is MB."))
 o.datatype = "uinteger"
 o.placeholder = "2"
 o.rmempty = true
