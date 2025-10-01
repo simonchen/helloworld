@@ -183,6 +183,50 @@ o.default = o.disabled
 o.rmempty = true
 o:depends("mode", "manual")
 
+o = s:option(ListValue, "smuxver", translate("smuxver"), translate("setting MUST be IDENTICAL on both sides, the default is 1."))
+o:value("1", "1")
+o:value("2", "2")
+o.default = "1"
+o.rmempty = true
+
+o = s:option(Value, "smuxbuf", "%s %s" %{translate("smuxbuf"), translate("(optional)")}, translate("the overall de-mux buff in bytes, default unit is MB."))
+o.datatype = "uinteger"
+o.placeholder = "4"
+o.rmempty = true
+o:depends("smuxver", "1")
+function o.cfgvalue(self, section)
+    local value = Value.cfgvalue(self, section)
+
+    if value then
+        return tonumber(value) / 1024 /1024
+    end
+end
+function o.write(self, section, value)
+    local n = tonumber(value)
+    if n ~= nil then
+        return Value.write(self, section, n * 1024 *1024)
+    end
+end
+
+o = s:option(Value, "streambuf", "%s %s" %{translate("streambuf"), translate("(optional)")}, translate("per stream receive buffer in bytes, valid for -smuxver=2+, default unit is M
+o.datatype = "uinteger"
+o.placeholder = "2"
+o.rmempty = true
+o:depends("smuxver", "2")
+function o.cfgvalue(self, section)
+    local value = Value.cfgvalue(self, section)
+
+    if value then
+        return tonumber(value) / 1024 /1024
+    end
+end
+function o.write(self, section, value)
+    local n = tonumber(value)
+    if n ~= nil then
+        return Value.write(self, section, n * 1024 *1024)
+    end
+end
+
 o = s:option(Value, "sockbuf", "%s %s" %{translate("sockbuf"), translate("(optional)")}, translate("Send/secv buffer size of udp sockets, default unit is MB."))
 o.datatype = "uinteger"
 o.placeholder = "4"
