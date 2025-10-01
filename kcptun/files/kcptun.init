@@ -65,6 +65,8 @@ kcptun() {
 	[ -z "$snmplog" ] || json_add_string snmplog "$snmplog"
 	[ -z "$snmpperiod" ] || json_add_int snmpperiod "$snmpperiod"
 	json_add_boolean quiet "$quiet"
+	[ -z "$interval" ] || json_add_int interval "$interval"
+	[ -z "$nodelay" ] || json_add_int nodelay "$nodelay"
 	json_dump -i > "$confjson"
 
 	procd_open_instance "$cfgtype.$cfg"
@@ -133,6 +135,8 @@ validate_common_options() {
 		'parityshard:uinteger' \
 		'dscp:uinteger' \
 		'nocomp:bool' \
+		'interval:uinteger' \
+		'nodelay:bool' \
 		'sockbuf:uinteger' \
 		'smuxver:uinteger' \
 		'smuxbuf:uinteger' \
