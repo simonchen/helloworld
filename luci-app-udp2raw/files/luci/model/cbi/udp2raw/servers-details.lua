@@ -89,7 +89,7 @@ o = s:option(Value, "log_level", translate("Log Level"))
 o.datatype = "range(0,6)"
 o.placeholder = "4"
 
-o = s:option(Value, "custom_param", translate("Custom parameters"))
+o = s:option(Value, "custom_param", translate("Custom parameters"), translate("Multiple parameters should be separated by pipe characters."))
 o.default = ""
 
 return m
