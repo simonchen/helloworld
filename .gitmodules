@@ -7,3 +7,4 @@
 [submodule "luci-app-argon-config-18.06"]
 	path = luci-app-argon-config-18.06
 	url = https://github.com/simonchen/luci-app-argon-config-18.06
+	branch = 18.06
