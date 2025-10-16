@@ -250,4 +250,10 @@ o.datatype = "uinteger"
 o.placeholder = "10"
 o.rmempty = true
 
+o = s:option(Flag, "quiet", translate("quiet"), translate("to suppress the 'stream open/close' messages"))
+o.enabled = "true"
+o.disabled = "false"
+o.default = o.disabled
+o.rmempty = true
+
 return m
