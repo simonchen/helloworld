@@ -21,7 +21,7 @@ PKG_BUILD_FLAGS:=no-mips16
 GO_PKG:=github.com/simonchen/clash-core
 GO_PKG_LDFLAGS:=-s -w
 #GO_PKG_BUILD_PKG:=$(GO_PKG)/test
-GO_PKG_LDFLAGS_X:=main.VERSION=$(PKG_VERSION)
+GO_PKG_LDFLAGS_X:=$(GO_PKG)/constant.Version=v$(PKG_VERSION) $(GO_PKG)/constant.BuildTime=$(BUILDTIME)
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/../feeds/packages/lang/golang/golang-package.mk
@@ -47,10 +47,10 @@ endef
 
 define Package/clash-core/install
 	$(call GoPackage/Package/Install/Bin,$(PKG_INSTALL_DIR))
-	$(INSTALL_DIR) $(1)/usr/bin/
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/clash-core $(1)/usr/bin/clash
+	$(INSTALL_DIR) $(1)/etc/openclash/core
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/clash-core $(1)/etc/openclash/core/clash
 	# Compress the binary with UPX
-	$(STAGING_DIR_HOST)/bin/upx -9 $(1)/usr/bin/clash
+	$(STAGING_DIR_HOST)/bin/upx --lzma --best $(1)/etc/openclash/core/clash
 endef
 
 $(eval $(call BuildPackage,clash-core))
