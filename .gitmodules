@@ -4,6 +4,7 @@
 [submodule "luci-app-openclash"]
 	path = luci-app-openclash
 	url = https://github.com/simonchen/luci-app-openclash.git
+	branch = main
 [submodule "luci-app-argon-config-18.06"]
 	path = luci-app-argon-config-18.06
 	url = https://github.com/simonchen/luci-app-argon-config-18.06
