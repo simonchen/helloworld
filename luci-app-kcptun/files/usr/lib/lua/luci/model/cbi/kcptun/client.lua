@@ -98,6 +98,45 @@ end
 o.default = "fast"
 o.rmempty = false
 
+o = s:option(Flag, "nodelay", translate("nodelay"), translate("Enable nodelay Mode."))
+o.enabled = "1"
+o.disabled = "0"
+o.rmempty = true
+o:depends("mode", "manual")
+function o.cfgvalue(self, section)
+    return Flag.cfgvalue(self, section) or o.enabled
+end
+
+o = s:option(Value, "interval", translate("interval"))
+o.datatype = "uinteger"
+o.placeholder = "20"
+o.rmempty = true
+o:depends("mode", "manual")
+
+o = s:option(ListValue, "resend", translate("resend"))
+o:value("0", translate("Off"))
+o:value("1", translate("On"))
+o:value("2", translate("2nd ACK"))
+o.default = "2"
+o.rmempty = true
+o:depends("mode", "manual")
+
+o = s:option(Flag, "nc", translate("nc"))
+o.enabled = "1"
+o.disabled = "0"
+o.rmempty = true
+o:depends("mode", "manual")
+function o.cfgvalue(self, section)
+    return Flag.cfgvalue(self, section) or o.enabled
+end
+
+o = s:option(Flag, "acknodelay", translate("acknodelay"))
+o.enabled = "true"
+o.disabled = "false"
+o.default = o.disabled
+o.rmempty = true
+o:depends("mode", "manual")
+
 o = s:option(Value, "conn", "%s %s" %{translate("conn"), translate("(optional)")}, translate("Number of UDP connections to server."))
 o.datatype = "uinteger"
 o.placeholder = "1"
@@ -144,44 +183,49 @@ o.disabled = "false"
 o.default = o.disabled
 o.rmempty = false
 
-o = s:option(Flag, "nodelay", translate("nodelay"), translate("Enable nodelay Mode."))
-o.enabled = "1"
-o.disabled = "0"
+o = s:option(ListValue, "smuxver", translate("smuxver"), translate("setting MUST be IDENTICAL on both sides, the default is 1."))
+o:value("1", "1")
+o:value("2", "2")
+o.default = "1"
 o.rmempty = true
-o:depends("mode", "manual")
-function o.cfgvalue(self, section)
-    return Flag.cfgvalue(self, section) or o.enabled
-end
 
-o = s:option(Value, "interval", translate("interval"))
+o = s:option(Value, "smuxbuf", "%s %s" %{translate("smuxbuf"), translate("(optional)")}, translate("the overall de-mux buff in bytes, default unit is MB."))
 o.datatype = "uinteger"
-o.placeholder = "20"
+o.placeholder = "4"
 o.rmempty = true
-o:depends("mode", "manual")
-
-o = s:option(ListValue, "resend", translate("resend"))
-o:value("0", translate("Off"))
-o:value("1", translate("On"))
-o:value("2", translate("2nd ACK"))
-o.default = "2"
-o.rmempty = true
-o:depends("mode", "manual")
-
-o = s:option(Flag, "nc", translate("nc"))
-o.enabled = "1"
-o.disabled = "0"
-o.rmempty = true
-o:depends("mode", "manual")
+o:depends("smuxver", "1")
 function o.cfgvalue(self, section)
-    return Flag.cfgvalue(self, section) or o.enabled
+    local value = Value.cfgvalue(self, section)
+
+    if value then
+        return tonumber(value) / 1024 /1024
+    end
+end
+function o.write(self, section, value)
+    local n = tonumber(value)
+    if n ~= nil then
+        return Value.write(self, section, n * 1024 *1024)
+    end
 end
 
-o = s:option(Flag, "acknodelay", translate("acknodelay"))
-o.enabled = "true"
-o.disabled = "false"
-o.default = o.disabled
+o = s:option(Value, "streambuf", "%s %s" %{translate("streambuf"), translate("(optional)")}, translate("per stream receive buffer in bytes, valid for -smuxver=2+, default unit is MB."))
+o.datatype = "uinteger"
+o.placeholder = "2"
 o.rmempty = true
-o:depends("mode", "manual")
+o:depends("smuxver", "2")
+function o.cfgvalue(self, section)
+    local value = Value.cfgvalue(self, section)
+
+    if value then
+        return tonumber(value) / 1024 /1024
+    end
+end
+function o.write(self, section, value)
+    local n = tonumber(value)
+    if n ~= nil then
+        return Value.write(self, section, n * 1024 *1024)
+    end
+end
 
 o = s:option(Value, "sockbuf", "%s %s" %{translate("sockbuf"), translate("(optional)")}, translate("Send/secv buffer size of udp sockets, default unit is MB."))
 o.datatype = "uinteger"
@@ -204,6 +248,12 @@ end
 o = s:option(Value, "keepalive", "%s %s" %{translate("keepalive"), translate("(optional)")}, translate("NAT keepalive interval to prevent your router from removing port mapping, default unit is seconds."))
 o.datatype = "uinteger"
 o.placeholder = "10"
+o.rmempty = true
+
+o = s:option(Flag, "quiet", translate("quiet"), translate("to suppress the 'stream open/close' messages"))
+o.enabled = "true"
+o.disabled = "false"
+o.default = o.disabled
 o.rmempty = true
 
 return m

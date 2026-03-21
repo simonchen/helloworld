@@ -72,7 +72,7 @@ create_config() {
 	[ -n "$log_level" ] && echo "--log-level ${log_level}" >> $config_file
 	echo "--disable-color" >> $config_file
 
-	[ -n "$custom_param" ] && echo "${custom_param}" >> $config_file
+	[ -n "$custom_param" ] && echo "${custom_param}" | sed 's/|/\n/g' >> $config_file
 }
 
 validate_config_section() {

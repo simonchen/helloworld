@@ -13,7 +13,7 @@ PKG_MAINTAINER:=Dengfeng Liu <liudf0716@gmail.com>, Chao Liu <expiron18@gmail.co
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE.md
 
-PKG_BUILD_DEPENDS:=golang/host
+PKG_BUILD_DEPENDS:=golang/host upx/host
 PKG_BUILD_PARALLEL:=1
 PKG_USE_MIPS16:=0
 
@@ -64,6 +64,7 @@ This package only contains kcptun $(1).
 
 		$$(INSTALL_DIR) $$(1)/usr/bin
 		$$(INSTALL_BIN) $$(PKG_INSTALL_DIR)/usr/bin/$(1) $$(1)/usr/bin/kcptun-$(1)
+		$(STAGING_DIR_HOST)/bin/upx --lzma --best $$(1)/usr/bin/kcptun-$(1)
   endef
 endef
 
