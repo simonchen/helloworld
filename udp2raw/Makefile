@@ -46,7 +46,7 @@ MAKE_FLAGS += cross2
 define Build/Configure
 	$(call Build/Configure/Default)
 	$(SED) 's/cc_cross[[:space:]]*=.*/cc_cross=$(TARGET_CXX)/' \
-		-e 's/\\".*shell git rev-parse HEAD.*\\"/\\"$(PKG_SOURCE_VERSION)\\"/' \
+		-e 's/\\".*shell git rev-parse HEAD.*\\"/\\"$(PKG_VERSION)\\"/' \
 		$(PKG_BUILD_DIR)/makefile
 endef
 
