@@ -9,3 +9,6 @@
 	path = luci-app-argon-config-18.06
 	url = https://github.com/simonchen/luci-app-argon-config-18.06
 	branch = 18.06
+[submodule "luci-app-conntrack"]
+	path = luci-app-conntrack
+	url = https://github.com/simonchen/luci-app-conntrack
